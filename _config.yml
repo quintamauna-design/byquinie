@@ -12,6 +12,13 @@ lang: id
 url: "https://quintamauna-design.github.io"
 baseurl: "/byquinie"
 
+# Tampilan bawaan (pembaca tetap bisa mengubahnya lewat tombol "Aa")
+#   font   : lora (serif lembut) | garamond (klasik) | inter (modern) | courier (mesin tik)
+#   ukuran : 90 | 100 | 110 | 120 | 130  (persen)
+tampilan:
+  font: lora
+  ukuran: 100
+
 # Tautan sosial (kosongkan yang tidak dipakai)
 social:
   instagram: ""

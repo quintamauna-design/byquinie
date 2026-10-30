@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ site.lang | default: 'id' }}">
+<html lang="{{ site.lang | default: 'id' }}" data-font="{{ site.tampilan.font | default: 'lora' }}" style="--scale: {{ site.tampilan.ukuran | default: 100 | divided_by: 100.0 }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,10 +17,15 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✎</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <script>
-    try { var t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    try {
+      var r = document.documentElement, t = localStorage.getItem('tema'), f = localStorage.getItem('font'), u = localStorage.getItem('ukuran');
+      if (t) r.dataset.theme = t;
+      if (f) r.dataset.font = f;
+      if (u) r.style.setProperty('--scale', u / 100);
+    } catch (e) {}
   </script>
 </head>
 <body>

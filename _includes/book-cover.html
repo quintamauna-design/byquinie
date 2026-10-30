@@ -1,0 +1,9 @@
+{%- assign b = include.book -%}
+<div class="cover" style="--cover: {{ b.warna | default: '#5b4636' }}">
+  {%- if b.sampul %}
+  <img src="{{ b.sampul | relative_url }}" alt="Sampul {{ b.judul }}" loading="lazy">
+  {%- else %}
+  <span class="cover-title">{{ b.judul }}</span>
+  <span class="cover-author">{{ site.author }}</span>
+  {%- endif %}
+</div>

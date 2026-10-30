@@ -4,8 +4,28 @@
     {%- assign here = page.url -%}
     <a href="{{ '/' | relative_url }}" {% if here == '/' %}aria-current="page"{% endif %}>Beranda</a>
     <a href="{{ '/tulisan/' | relative_url }}" {% if here == '/tulisan/' or page.layout == 'post' %}aria-current="page"{% endif %}>Tulisan</a>
+    <a href="{{ '/novel/' | relative_url }}" {% if here == '/novel/' %}aria-current="page"{% endif %}>Novel</a>
     <a href="{{ '/tentang/' | relative_url }}" {% if here == '/tentang/' %}aria-current="page"{% endif %}>Tentang</a>
-    <button class="theme-toggle" type="button" aria-label="Ganti tema terang/gelap" title="Ganti tema">
+    <div class="reader">
+      <button class="icon-btn reader-toggle" type="button" aria-expanded="false" aria-controls="reader-panel" title="Atur huruf">Aa</button>
+      <div class="reader-panel" id="reader-panel" data-default-font="{{ site.tampilan.font | default: 'lora' }}" data-default-size="{{ site.tampilan.ukuran | default: 100 }}" hidden>
+        <p class="reader-label">Huruf</p>
+        <div class="font-options" role="radiogroup" aria-label="Pilihan huruf">
+          <button type="button" role="radio" data-font="lora" style="font-family: Lora, serif">Lora</button>
+          <button type="button" role="radio" data-font="garamond" style="font-family: 'EB Garamond', serif">Garamond</button>
+          <button type="button" role="radio" data-font="inter" style="font-family: Inter, sans-serif">Inter</button>
+          <button type="button" role="radio" data-font="courier" style="font-family: 'Courier Prime', monospace">Mesin tik</button>
+        </div>
+        <p class="reader-label">Ukuran</p>
+        <div class="size-options">
+          <button type="button" data-size="-1" aria-label="Perkecil huruf">A−</button>
+          <output class="size-value">100%</output>
+          <button type="button" data-size="1" aria-label="Perbesar huruf">A+</button>
+        </div>
+        <button type="button" class="reader-reset">Kembalikan ke awal</button>
+      </div>
+    </div>
+    <button class="icon-btn theme-toggle" type="button" aria-label="Ganti tema terang/gelap" title="Ganti tema">
       <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
       <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </button>

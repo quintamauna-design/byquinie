@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+#  DAFTAR NOVEL
+#  Tiga novel di bawah ini cuma CONTOH — ganti dengan novelmu.
+#  Urutan di sini = urutan tampil di website (paling atas = paling depan).
+#
+#  judul     : judul novel (wajib)
+#  tahun     : tahun terbit / mulai ditulis
+#  genre     : bebas, mis. "Drama keluarga", "Romansa", "Fantasi"
+#  status    : Selesai | Sedang ditulis | Draf
+#  sinopsis  : 1–3 kalimat
+#  bab       : jumlah bab (boleh dikosongkan)
+#  warna     : warna sampul kalau belum punya gambar (kode hex, mis. "#7a3b2e")
+#  sampul    : (opsional) gambar sampul, taruh di assets/img/novel/
+#              lalu tulis mis. "/assets/img/novel/rumah-tujuh-menit.jpg"
+#  tautan    : (opsional) tempat baca/beli — Wattpad, Gramedia, KaryaKarsa, dll.
+# ─────────────────────────────────────────────────────────────
+
+- judul: Rumah yang Terlambat Tujuh Menit
+  tahun: 2026
+  genre: Drama keluarga
+  status: Sedang ditulis
+  bab: 14
+  warna: "#7a3b2e"
+  sinopsis: >-
+    Laras pulang untuk menjual rumah masa kecilnya, dan menemukan bahwa
+    semua jam di dalamnya sengaja dibiarkan salah oleh orang-orang yang
+    tidak ingin waktu berlalu.
+  tautan:
+    - label: Baca di Wattpad
+      url: "#"
+
+- judul: Surat-Surat yang Tidak Dikirim
+  tahun: 2025
+  genre: Romansa
+  status: Selesai
+  bab: 32
+  warna: "#2f4a5a"
+  sinopsis: >-
+    Dua orang asing berbagi kotak pos yang sama selama satu musim hujan,
+    dan saling jatuh cinta lewat surat yang salah alamat.
+  tautan:
+    - label: Baca di KaryaKarsa
+      url: "#"
+    - label: Beli versi cetak
+      url: "#"
+
+- judul: Kota di Bawah Payung
+  tahun: 2024
+  genre: Fantasi
+  status: Draf
+  warna: "#4d5a3a"
+  sinopsis: >-
+    Di kota tempat hujan tidak pernah berhenti, seorang penjual payung
+    menemukan payung yang bisa memayungi kenangan.

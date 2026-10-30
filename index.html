@@ -7,6 +7,23 @@ layout: default
   <p class="intro-more"><a href="{{ '/tentang/' | relative_url }}">Kenalan lebih jauh →</a></p>
 </section>
 
+{%- if site.data.novel.size > 0 %}
+<section class="home-shelf">
+  <h2 class="section-label">Rak novel</h2>
+  <ul class="mini-shelf">
+    {%- for b in site.data.novel limit: 4 %}
+    <li>
+      <a href="{{ '/novel/' | relative_url }}#{{ b.judul | slugify }}" title="{{ b.judul }}">
+        {% include book-cover.html book=b %}
+        <span class="mini-status">{{ b.status | default: "Draf" }}</span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+  <p class="see-all"><a href="{{ '/novel/' | relative_url }}">Lihat semua novel →</a></p>
+</section>
+
+{% endif -%}
 <section class="latest">
   <h2 class="section-label">Tulisan terbaru</h2>
   <ul class="post-list">
