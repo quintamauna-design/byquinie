@@ -1,0 +1,39 @@
+# ── Identitas situs ─────────────────────────────────────────
+title: byquinie
+author: Quinie
+tagline: Catatan kecil tentang hal-hal yang terlalu sayang untuk dilupakan.
+description: >-
+  Ruang menulis Quinie — esai, cerita pendek, puisi, dan catatan
+  sehari-hari yang ditulis pelan-pelan.
+lang: id
+
+# Kalau di-host di GitHub Pages sebagai repo project, isi baseurl: "/byquinie".
+# Kalau pakai domain sendiri, biarkan kosong.
+url: ""
+baseurl: ""
+
+# Tautan sosial (kosongkan yang tidak dipakai)
+social:
+  instagram: ""
+  twitter: ""
+  email: ""
+
+# ── Pengaturan tulisan ──────────────────────────────────────
+permalink: /:year/:month/:title/
+excerpt_separator: <!--more-->
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+
+defaults:
+  - scope: { path: "", type: posts }
+    values: { layout: post }
+  - scope: { path: "" }
+    values: { layout: default }
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

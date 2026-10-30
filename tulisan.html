@@ -1,0 +1,32 @@
+---
+layout: default
+title: Tulisan
+permalink: /tulisan/
+---
+<h1 class="page-title">Semua tulisan</h1>
+<p class="page-lead">{{ site.posts.size }} tulisan sejauh ini. Pilih kategori atau gulir saja pelan-pelan.</p>
+
+{%- assign cats = site.posts | map: "category" | compact | uniq | sort %}
+<div class="filters" role="group" aria-label="Saring berdasarkan kategori">
+  <button type="button" class="chip is-active" data-filter="semua">Semua</button>
+  {%- for c in cats %}
+  <button type="button" class="chip" data-filter="{{ c | slugify }}" id="{{ c | slugify }}">{{ c }}</button>
+  {%- endfor %}
+</div>
+
+{%- assign by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
+{%- for year in by_year %}
+<section class="year-group">
+  <h2 class="year">{{ year.name }}</h2>
+  <ul class="post-list compact">
+    {%- for post in year.items %}
+    <li class="post-item" data-cat="{{ post.category | slugify }}">
+      <a class="post-link row" href="{{ post.url | relative_url }}">
+        <span class="post-title">{{ post.title }}</span>
+        <span class="post-meta">{% if post.category %}{{ post.category }} · {% endif %}{{ post.date | date: "%d/%m" }}</span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endfor %}

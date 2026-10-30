@@ -1,0 +1,12 @@
+<li class="post-item">
+  <a class="post-link" href="{{ include.post.url | relative_url }}">
+    <span class="post-meta">
+      <time datetime="{{ include.post.date | date_to_xmlschema }}">{% include date.html date=include.post.date %}</time>
+      {%- if include.post.category %} · <span class="post-cat">{{ include.post.category }}</span>{% endif %}
+    </span>
+    <span class="post-title">{{ include.post.title }}</span>
+    {%- if include.excerpt %}
+    <span class="post-excerpt">{{ include.post.excerpt | strip_html | normalize_whitespace | truncatewords: 32 }}</span>
+    {%- endif %}
+  </a>
+</li>

@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<section class="intro">
+  <p class="intro-hello">Halo, aku {{ site.author }}.</p>
+  <p class="intro-text">{{ site.tagline }} Di sini aku menyimpan esai, cerita pendek, puisi, dan catatan yang lahir dari hari-hari biasa — supaya tidak hilang begitu saja.</p>
+  <p class="intro-more"><a href="{{ '/tentang/' | relative_url }}">Kenalan lebih jauh →</a></p>
+</section>
+
+<section class="latest">
+  <h2 class="section-label">Tulisan terbaru</h2>
+  <ul class="post-list">
+    {%- for post in site.posts limit: 6 %}
+      {% include post-item.html post=post excerpt=true %}
+    {%- endfor %}
+  </ul>
+  {%- if site.posts.size > 6 %}
+  <p class="see-all"><a href="{{ '/tulisan/' | relative_url }}">Lihat semua tulisan ({{ site.posts.size }}) →</a></p>
+  {%- endif %}
+</section>

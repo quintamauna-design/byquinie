@@ -1,0 +1,30 @@
+---
+layout: default
+---
+<div class="progress" aria-hidden="true"><span></span></div>
+<article class="post">
+  <header class="post-header">
+    <p class="post-meta">
+      {%- if page.category %}<a class="post-cat" href="{{ '/tulisan/' | relative_url }}#{{ page.category | slugify }}">{{ page.category }}</a> · {% endif -%}
+      <time datetime="{{ page.date | date_to_xmlschema }}">{% include date.html date=page.date %}</time>
+      · {% include reading-time.html content=content %}
+    </p>
+    <h1 class="post-title-big">{{ page.title }}</h1>
+    {%- if page.subtitle %}<p class="post-subtitle">{{ page.subtitle }}</p>{% endif %}
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <p class="post-end" aria-hidden="true">❦</p>
+
+  <nav class="post-nav" aria-label="Tulisan lain">
+    {%- if page.previous %}
+    <a class="prev" href="{{ page.previous.url | relative_url }}"><small>← Sebelumnya</small><span>{{ page.previous.title }}</span></a>
+    {%- else %}<span></span>{% endif %}
+    {%- if page.next %}
+    <a class="next" href="{{ page.next.url | relative_url }}"><small>Berikutnya →</small><span>{{ page.next.title }}</span></a>
+    {%- endif %}
+  </nav>
+</article>
