@@ -7,10 +7,10 @@ description: >-
   sehari-hari yang ditulis pelan-pelan.
 lang: id
 
-# Kalau di-host di GitHub Pages sebagai repo project, isi baseurl: "/byquinie".
-# Kalau pakai domain sendiri, biarkan kosong.
-url: ""
-baseurl: ""
+# Alamat website di GitHub Pages: https://quintamauna-design.github.io/byquinie/
+# Kalau nanti pakai domain sendiri, ganti url-nya dan kosongkan baseurl.
+url: "https://quintamauna-design.github.io"
+baseurl: "/byquinie"
 
 # Tautan sosial (kosongkan yang tidak dipakai)
 social:
