@@ -144,6 +144,13 @@
   }
 
   var hero = document.querySelector('.hero');
+  // Blok kuning beranda naik ke belakang kepala situs
+  var header = document.querySelector('.site-header');
+  if (hero && header) {
+    var fit = function () { hero.style.setProperty('--header-h', header.offsetHeight + 'px'); };
+    window.addEventListener('resize', fit);
+    fit();
+  }
   var track = document.querySelector('.marquee-track');
   var parallax = document.querySelectorAll('[data-speed]');
   var marquee = { x: 0, dir: 1 };
@@ -188,8 +195,10 @@
     if (motion) {
       parallax.forEach(function (el) {
         var r = el.getBoundingClientRect();
-        var off = (r.top + r.height / 2 - window.innerHeight / 2) * Number(el.dataset.speed);
-        el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+        var off = (r.top - (el._off || 0) + r.height / 2 - window.innerHeight / 2) * Number(el.dataset.speed);
+        el._off = off;
+        var spin = el.dataset.spin ? ' rotate(' + (y * Number(el.dataset.spin)).toFixed(1) + 'deg)' : '';
+        el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)' + spin;
       });
     }
     if (cursor && fine) {

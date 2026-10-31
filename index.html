@@ -2,15 +2,24 @@
 layout: default
 ---
 <section class="hero" aria-label="{{ site.title }}">
-  <p class="hero-mark" aria-hidden="true"><span class="hero-by">by</span><span class="hero-name">quinie</span></p>
-  <p class="hero-tag">{{ site.tagline }}</p>
-  <p class="hero-hint" aria-hidden="true">gulir pelan-pelan ↓</p>
+  <div class="hero-inner">
+    <p class="hero-kicker">Sunstellar <span>·</span> ruang menulis</p>
+    <p class="hero-mark" aria-hidden="true"><span class="hero-by">by</span><span class="hero-name">Quinie</span></p>
+    <p class="hero-tag">{{ site.tagline }}</p>
+    <p class="hero-hint" aria-hidden="true">Gulir pelan-pelan ↓</p>
+  </div>
+  <svg class="star star-big" data-speed="-0.12" data-spin="0.08" aria-hidden="true"><use href="#bintang"/></svg>
+  <svg class="star star-pink" data-speed="0.18" data-spin="-0.12" aria-hidden="true"><use href="#bintang"/></svg>
+  <svg class="star star-small" data-speed="0.3" data-spin="0.2" aria-hidden="true"><use href="#bintang"/></svg>
 </section>
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
+    {%- assign kategori = "Esai,Cerpen,Puisi,Catatan,Novel" | split: "," %}
     {%- for i in (1..4) %}
-    <span>Esai</span><span class="star">✦</span><span>Cerpen</span><span class="star">✦</span><span>Puisi</span><span class="star">✦</span><span>Catatan</span><span class="star">✦</span><span>Novel</span><span class="star">✦</span>
+    {%- for k in kategori %}
+    <span>{{ k }}</span><svg class="star"><use href="#bintang"/></svg>
+    {%- endfor %}
     {%- endfor %}
   </div>
 </div>

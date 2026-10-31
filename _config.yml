@@ -16,7 +16,7 @@ baseurl: "/byquinie"
 #   font   : lora (serif lembut) | garamond (klasik) | inter (modern) | courier (mesin tik)
 #   ukuran : 90 | 100 | 110 | 120 | 130  (persen)
 tampilan:
-  font: lora
+  font: inter
   ukuran: 100
 
 # Tautan sosial (kosongkan yang tidak dipakai)
