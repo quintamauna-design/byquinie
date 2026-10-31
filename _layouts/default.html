@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family={{ font_judul | replace: ' ', '+' }}&family={{ font_sambung | replace: ' ', '+' }}&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   <style>
     :root {
       --pink: {{ tp.warna.pink | default: "#de6593" }};
@@ -56,9 +56,9 @@
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <radialGradient id="planet-pink" cx="35%" cy="30%" r="75%">
-        <stop offset="0" style="stop-color: color-mix(in srgb, var(--pink) 18%, white)"/>
-        <stop offset=".45" style="stop-color: color-mix(in srgb, var(--pink) 85%, white)"/>
-        <stop offset="1" style="stop-color: color-mix(in srgb, var(--pink) 80%, black)"/>
+        <stop offset="0" stop-color="#ffe1ee" style="stop-color: color-mix(in srgb, var(--pink) 18%, white)"/>
+        <stop offset=".45" stop-color="#ef86b3" style="stop-color: color-mix(in srgb, var(--pink) 85%, white)"/>
+        <stop offset="1" stop-color="#c94078" style="stop-color: color-mix(in srgb, var(--pink) 80%, black)"/>
       </radialGradient>
     </defs>
     <symbol id="bintang" viewBox="0 0 100 100"><path d="M48 2l13 35 37 2-29 23 12 36-31-21-33 22 13-37L2 40l37-2z"/></symbol>
@@ -90,6 +90,6 @@
       <path class="moon" d="M55 5l2 5 5 .3-4 3.2 1.6 5-4.4-3-4.6 3 1.8-5.2-4-3 5.2-.3z" style="fill: var(--ink)"/>
     </svg>
   </div>
-  <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>
