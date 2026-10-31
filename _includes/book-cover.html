@@ -1,9 +1,15 @@
 {%- assign b = include.book -%}
-<div class="cover" style="--cover: {{ b.warna | default: '#5b4636' }}">
-  {%- if b.sampul %}
-  <img src="{{ b.sampul | relative_url }}" alt="Sampul {{ b.judul }}" loading="lazy">
+{%- assign w = b.warna | default: "pink" -%}
+{%- if w contains "#" %}
+<div class="cover" style="--c-bg: {{ w }}">
+{%- else %}
+<div class="cover cover-{{ w }}">
+{%- endif %}
+  {%- if b.sampul and b.sampul != "" %}
+  <img src="{{ b.sampul | relative_url }}" alt="Sampul {{ b.title }}" loading="lazy">
   {%- else %}
-  <span class="cover-title">{{ b.judul }}</span>
+  <svg class="star" aria-hidden="true"><use href="#bintang"/></svg>
+  <span class="cover-title">{{ b.title }}</span>
   <span class="cover-author">{{ site.author }}</span>
   {%- endif %}
 </div>

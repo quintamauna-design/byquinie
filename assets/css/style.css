@@ -1,14 +1,15 @@
 /* ── Warna & tipografi ─────────────────────────────────── */
 :root {
-  --bg: #ffffff;
-  --text: #0b0b0b;
-  --muted: #6b6767;
-  --line: #e8e4e4;
-  --accent: #de6593;
-  --accent-soft: #fbe3ec;
   --pink: #de6593;
   --butter: #f4e35c;
   --ink: #0b0b0b;
+  --paper: #ffffff;
+  --bg: var(--paper);
+  --text: var(--ink);
+  --muted: color-mix(in srgb, var(--ink) 60%, var(--paper));
+  --line: color-mix(in srgb, var(--ink) 10%, var(--paper));
+  --accent: var(--pink);
+  --accent-soft: color-mix(in srgb, var(--pink) 16%, var(--paper));
   --serif: "Lora", Georgia, "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --display: "Anton", Impact, "Arial Narrow", sans-serif;
@@ -25,22 +26,22 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b0b0b;
-    --text: #f7f5f5;
-    --muted: #a39d9d;
-    --line: #2b2828;
-    --accent: #ee7fab;
-    --accent-soft: #3b1c2a;
+    --bg: var(--ink);
+    --text: color-mix(in srgb, var(--paper) 96%, var(--ink));
+    --muted: color-mix(in srgb, var(--paper) 62%, var(--ink));
+    --line: color-mix(in srgb, var(--paper) 15%, var(--ink));
+    --accent: color-mix(in srgb, var(--pink) 82%, white);
+    --accent-soft: color-mix(in srgb, var(--pink) 22%, var(--ink));
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0b0b0b;
-  --text: #f7f5f5;
-  --muted: #a39d9d;
-  --line: #2b2828;
-  --accent: #ee7fab;
-  --accent-soft: #3b1c2a;
+  --bg: var(--ink);
+  --text: color-mix(in srgb, var(--paper) 96%, var(--ink));
+  --muted: color-mix(in srgb, var(--paper) 62%, var(--ink));
+  --line: color-mix(in srgb, var(--paper) 15%, var(--ink));
+  --accent: color-mix(in srgb, var(--pink) 82%, white);
+  --accent-soft: color-mix(in srgb, var(--pink) 22%, var(--ink));
   color-scheme: dark;
 }
 
@@ -90,7 +91,7 @@ main { flex: 1; }
   text-decoration: none;
   letter-spacing: -.01em;
 }
-.site-nav { display: flex; align-items: center; gap: 1.25rem; font: 500 .9rem var(--sans); }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.25rem; font: 500 .9rem var(--sans); }
 .site-nav a { text-decoration: none; color: var(--muted); }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--text); }
 .icon-btn {
@@ -234,45 +235,6 @@ main { flex: 1; }
 .post-nav span { font-size: 1rem; line-height: 1.4; }
 .post-nav .next { text-align: right; grid-column: 2; }
 
-/* ── Novel ───────────────────────────────────────────── */
-.cover {
-  position: relative; aspect-ratio: 2 / 3; overflow: hidden;
-  border-radius: 2px 6px 6px 2px;
-  background: var(--cover);
-  background-image: linear-gradient(90deg, rgba(0,0,0,.28) 0, rgba(255,255,255,.12) 4%, rgba(0,0,0,0) 7%), linear-gradient(160deg, rgba(255,255,255,.1), rgba(0,0,0,.15));
-  box-shadow: 0 1px 2px rgba(0,0,0,.15), 0 10px 24px -8px rgba(0,0,0,.35);
-  color: #f6efe6;
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 14% 12% 10% 16%;
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-.cover::after { content: ""; position: absolute; inset: 6% 7% 6% 11%; border: 1px solid rgba(255,255,255,.25); pointer-events: none; }
-.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.cover-title { font: 500 1.15rem/1.2 "Lora", Georgia, serif; text-wrap: balance; }
-.cover-author { font: .62rem var(--sans); letter-spacing: .18em; text-transform: uppercase; opacity: .8; }
-
-.shelf { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 3rem; }
-.book { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1.75rem; align-items: start; scroll-margin-top: 2rem; }
-.book:target .cover { outline: 2px solid var(--accent); outline-offset: 4px; }
-.book-meta { margin: 0 0 .4rem; font: .8rem var(--sans); color: var(--muted); }
-.badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-weight: 500; background: var(--accent-soft); color: var(--accent); }
-.badge-selesai { background: #e2ecdf; color: #3d6b3a; }
-.badge-draf { background: var(--line); color: var(--muted); }
-:root[data-theme="dark"] .badge-selesai { background: #24331f; color: #9fcf96; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .badge-selesai { background: #24331f; color: #9fcf96; } }
-.book-title { font-size: 1.5rem; line-height: 1.25; font-weight: 500; margin: 0 0 .6rem; }
-.book-synopsis { margin: 0 0 1rem; color: var(--text); }
-.book-links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 0; font: 500 .85rem var(--sans); }
-.book-links a { color: var(--accent); text-decoration: none; }
-
-.home-shelf { margin-bottom: 4rem; }
-.mini-shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-.mini-shelf a { display: block; text-decoration: none; }
-.mini-shelf a:hover .cover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 2px 4px rgba(0,0,0,.15), 0 18px 30px -10px rgba(0,0,0,.4); }
-.mini-shelf .cover-title { font-size: .9rem; }
-.mini-shelf .cover-author { font-size: .5rem; }
-.mini-status { display: block; margin-top: .6rem; font: .75rem var(--sans); color: var(--muted); }
-
 /* ── 404 ───────────────────────────────────────────────── */
 .not-found { text-align: center; padding: 3rem 0; }
 .not-found .big { font-size: 4.5rem; font-style: italic; color: var(--accent); margin: 0; line-height: 1; }
@@ -284,12 +246,8 @@ main { flex: 1; }
   .post-nav .next { grid-column: 1; text-align: left; }
   .post-list.compact .post-link.row { flex-direction: column; gap: .2rem; }
   .site-nav { gap: .9rem; }
-  .book { grid-template-columns: 6.5rem 1fr; gap: 1.1rem; }
-  .book .cover-title { font-size: .85rem; }
-  .book .cover-author { font-size: .5rem; }
   .mini-shelf { grid-template-columns: repeat(3, 1fr); gap: .9rem; }
   .mini-shelf li:nth-child(4) { display: none; }
-  .mini-shelf .cover-title { font-size: .72rem; }
   .reader { position: static; }
   .reader-panel { left: 0; right: 0; top: calc(100% - 1.75rem); width: auto; }
 }
@@ -331,11 +289,12 @@ main { flex: 1; }
 }
 .hero-hint { margin: 2.5rem 0 0; font: 400 .9rem var(--display); letter-spacing: .12em; text-transform: uppercase; opacity: calc(1 - var(--p) * 3); }
 
+.hero-foto { position: absolute; z-index: 0; right: 9%; top: calc(var(--header-h, 8.5rem) + 1rem); width: clamp(8rem, 20vw, 15rem); aspect-ratio: 4 / 5; object-fit: cover; border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--pink); rotate: 4deg; }
 .star { display: inline-block; width: 1em; height: 1em; fill: currentColor; flex-shrink: 0; }
 .hero .star { position: absolute; z-index: 0; }
 .star-big { width: clamp(9rem, 30vw, 22rem); height: clamp(9rem, 30vw, 22rem); right: -3%; bottom: 6%; color: var(--ink); }
 .star-pink { width: clamp(5rem, 14vw, 10rem); height: clamp(5rem, 14vw, 10rem); right: 24%; top: 18%; color: var(--pink); }
-.star-small { width: 3.5rem; height: 3.5rem; left: 6%; bottom: 8%; color: #fff; }
+.star-small { width: 3.5rem; height: 3.5rem; left: 6%; bottom: 8%; color: var(--paper); }
 
 .marquee {
   width: 100vw; margin: 0 calc(50% - 50vw) 4.5rem;
@@ -344,6 +303,7 @@ main { flex: 1; }
   padding: .85rem 0;
 }
 .marquee-track { display: inline-flex; align-items: center; gap: 1.5rem; will-change: transform; }
+.marquee { color: var(--paper); }
 .marquee-track span { font: 400 clamp(2rem, 6vw, 3.4rem)/1 var(--display); text-transform: uppercase; }
 .marquee-track .star { color: var(--ink); font-size: clamp(1.4rem, 4vw, 2.2rem); }
 
@@ -386,7 +346,7 @@ main { flex: 1; }
 /* ── Sunstellar: huruf tebal, tulisan sambung, bintang ─── */
 .site-title { font: 400 2.4rem/1 var(--script); letter-spacing: 0; }
 .site-nav { font: 400 .95rem var(--display); letter-spacing: .06em; text-transform: uppercase; }
-.page-title, .post-title-big, .post-title, .book-title, .not-found .big {
+.page-title, .post-title-big, .post-title, .book-title, .not-found .big, .cover-title, .spread-title, .ebook-title {
   font-family: var(--display); font-weight: 400; font-style: normal;
   text-transform: uppercase; letter-spacing: -.005em; line-height: .95;
 }
@@ -394,7 +354,6 @@ main { flex: 1; }
 .post-title-big { font-size: clamp(3rem, 12vw, 5.5rem); }
 .post-title { font-size: 1.9rem; margin: .4rem 0 .5rem; }
 .post-list.compact .post-title { font-size: 1.35rem; }
-.book-title { font-size: 2rem; }
 .section-label { font: 400 1.6rem var(--display); letter-spacing: .01em; color: var(--text); display: flex; align-items: center; gap: .5rem; }
 .section-label::before { content: ""; width: .8em; height: .8em; background: var(--pink); clip-path: polygon(48% 2%, 61% 37%, 98% 39%, 69% 62%, 81% 98%, 50% 77%, 17% 99%, 30% 62%, 2% 40%, 39% 38%); }
 .year { font: 400 1.1rem var(--display); color: var(--pink); }
@@ -419,9 +378,9 @@ main { flex: 1; }
 .site-footer {
   width: 100vw; margin: 6rem calc(50% - 50vw) 0;
   padding: 3rem 1rem 3.5rem; border: 0;
-  background: var(--ink); color: #bdb7b7; text-align: center;
+  background: var(--ink); color: color-mix(in srgb, var(--paper) 72%, var(--ink)); text-align: center;
 }
-.site-footer a { color: #fff; }
+.site-footer a { color: var(--paper); }
 .site-footer .footer-line { color: var(--butter); }
 .footer-copy { font: 400 .9rem var(--display); letter-spacing: .1em; text-transform: uppercase; }
 :root[data-theme="dark"] .site-footer { background: var(--pink); color: #fff; }
@@ -436,5 +395,236 @@ main { flex: 1; }
   .star-pink { top: auto; bottom: 34%; right: 6%; }
   .marquee { margin-bottom: 3rem; }
   .site-title { font-size: 2.1rem; }
+  .site-nav { gap: .5rem .75rem; font-size: .85rem; }
+  .site-nav .icon-btn { width: 1.8rem; height: 1.8rem; }
   .post-title { font-size: 1.6rem; }
+}
+
+
+/* ── Sampul buku ──────────────────────────────────────── */
+.cover {
+  --c-bg: var(--pink); --c-fg: var(--paper); --c-star: var(--butter);
+  position: relative; aspect-ratio: 2 / 3; overflow: hidden;
+  background: var(--c-bg); color: var(--c-fg);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 12% 10%;
+  container-type: inline-size;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+}
+.cover-kuning { --c-bg: var(--butter); --c-fg: var(--ink); --c-star: var(--pink); }
+.cover-hitam  { --c-bg: var(--ink); --c-fg: var(--paper); --c-star: var(--pink); }
+.cover-putih  { --c-bg: var(--paper); --c-fg: var(--ink); --c-star: var(--pink); }
+a:has(> .cover) { text-decoration: none; }
+.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cover-title { position: relative; font-size: 15cqi; line-height: .92; text-wrap: balance; overflow-wrap: anywhere; }
+.cover-author { position: relative; font: 400 17cqi/1 var(--script); }
+.cover .star { position: absolute; width: 46cqi; height: 46cqi; right: -10cqi; bottom: 18%; color: var(--c-star); }
+a:hover > .cover, a:focus-visible > .cover { transform: translate(-3px, -3px) rotate(-1.5deg); box-shadow: 10px 10px 0 var(--ink); }
+:root[data-theme="dark"] .cover { border-color: var(--paper); box-shadow: 6px 6px 0 var(--pink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cover { border-color: var(--paper); box-shadow: 6px 6px 0 var(--pink); } }
+
+.home-shelf { margin-bottom: 4rem; }
+.mini-shelf { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+.mini-shelf a { display: block; text-decoration: none; }
+.mini-status { display: block; margin-top: .8rem; font: .75rem var(--sans); color: var(--muted); }
+
+/* ── Tombol ───────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .7rem 1.2rem;
+  border: 2px solid var(--text); border-radius: 999px;
+  background: var(--text); color: var(--bg);
+  font: 400 1rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s, transform .2s;
+}
+.btn:hover { background: var(--pink); border-color: var(--pink); color: var(--paper); transform: translateY(-2px); }
+.btn-garis { background: none; color: var(--text); }
+.btn-pink { background: var(--pink); border-color: var(--pink); color: var(--paper); }
+.btn-pink:hover { background: var(--ink); border-color: var(--ink); }
+.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.btn-row { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.5rem 0 0; }
+
+/* ── Halaman rak novel ────────────────────────────────── */
+.shelf { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 3.5rem; }
+.book { display: grid; grid-template-columns: 10rem 1fr; gap: 2rem; align-items: start; }
+.book-cover-link { display: block; }
+.book-meta { margin: 0 0 .5rem; font: .8rem var(--sans); color: var(--muted); }
+.badge { display: inline-block; padding: .15rem .6rem; border-radius: 999px; font: 400 .8rem var(--display); letter-spacing: .06em; text-transform: uppercase; background: var(--accent-soft); color: var(--pink); }
+.badge-selesai { background: var(--butter); color: var(--ink); }
+.badge-draf { background: var(--line); color: var(--muted); }
+.book-title { font-size: 2.1rem; margin: 0 0 .3rem; }
+.book-title a { text-decoration: none; }
+.book-tagline { font: 400 1.9rem/1.15 var(--script); margin: 0 0 .75rem; }
+.book-synopsis { margin: 0; color: var(--muted); font-size: .95em; }
+
+/* ── Halaman satu buku: gaya spread majalah ───────────── */
+.book-page { --lebar: min(100vw - 2rem, 62rem); width: var(--lebar); margin-inline: calc((100% - var(--lebar)) / 2); }
+.spread { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid var(--text); }
+.spread-cover { position: relative; overflow: hidden; display: grid; place-items: center; padding: 3rem 2rem; background: var(--butter); }
+.spread-cover.bg-kuning { background: var(--pink); }
+.spread-cover.bg-hitam, .spread-cover.bg-putih { background: var(--butter); }
+.spread-cover .cover { width: min(16rem, 80%); }
+.spread-cover > .star { position: absolute; width: 9rem; height: 9rem; left: -2rem; top: -2rem; color: var(--ink); }
+.spread-text { padding: 2.5rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+.spread-title { font-size: clamp(2.8rem, 7vw, 4.6rem); margin: .4rem 0 .5rem; }
+.spread-tagline { font: 400 clamp(2rem, 4vw, 2.6rem)/1.15 var(--script); margin: 0; }
+.cta-label { margin: 2rem 0 0; font: 400 .95rem var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.cta-label + .btn-row { margin-top: .6rem; }
+
+.book-body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 4rem 0 0; }
+.book-body .prose { max-width: 36rem; }
+.pullquote { margin: 0; font: 400 clamp(2.2rem, 4.5vw, 3rem)/1.2 var(--script); align-self: center; }
+.pullquote::before { content: ""; display: block; width: 2.5rem; height: 2.5rem; margin-bottom: 1rem; background: var(--pink); clip-path: polygon(48% 2%, 61% 37%, 98% 39%, 69% 62%, 81% 98%, 50% 77%, 17% 99%, 30% 62%, 2% 40%, 39% 38%); }
+
+.ebook-box {
+  margin: 4rem 0 0; padding: 2rem;
+  display: grid; grid-template-columns: auto 1fr; gap: 1.5rem 2rem; align-items: center;
+  background: var(--butter); color: var(--ink);
+  border: 2px solid var(--ink);
+}
+.ebook-box .section-label { color: var(--ink); grid-column: 1 / -1; margin: 0; }
+.harga { margin: 0; font: 400 clamp(2.4rem, 6vw, 3.4rem)/1 var(--display); }
+.harga s { font-size: .45em; color: color-mix(in srgb, var(--ink) 55%, var(--butter)); margin-left: .4rem; }
+.ebook-detail { margin: .4rem 0 0; font: .85rem var(--sans); }
+.ebook-box .btn { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.ebook-box .btn:hover { background: var(--pink); border-color: var(--pink); }
+
+.chapters { margin: 4rem 0 0; }
+.chapter-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--text); }
+.chapter-list li { border-bottom: 1px solid var(--line); }
+.chapter-list a { display: grid; grid-template-columns: 4rem 1fr auto; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; }
+.chapter-no { font: 400 2rem/1 var(--display); color: var(--pink); }
+.chapter-title { font: 400 1.4rem/1.1 var(--display); text-transform: uppercase; }
+.chapter-list a:hover .chapter-title { color: var(--pink); }
+.chapter-go { font: .8rem var(--sans); color: var(--muted); }
+.empty-note { color: var(--muted); font-style: italic; }
+
+/* ── Halaman e-book ───────────────────────────────────── */
+.ebook-grid { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 2.5rem 2rem; }
+.ebook-card { display: flex; flex-direction: column; gap: .9rem; }
+.ebook-card .cover { width: min(100%, 16rem); }
+.ebook-title { font-size: 1.7rem; margin: .4rem 0 0; }
+.ebook-title a { text-decoration: none; }
+.ebook-card .harga { font-size: 2rem; }
+.ebook-card .btn { align-self: flex-start; }
+
+/* ── Bab novel ────────────────────────────────────────── */
+.chapter-kicker { margin: 0 0 .6rem; font: 400 1rem var(--display); letter-spacing: .08em; text-transform: uppercase; }
+.chapter-kicker a { color: var(--pink); text-decoration: none; }
+.chapter-number { display: block; font: 400 2.4rem/1 var(--script); color: var(--pink); text-transform: none; margin-bottom: .3rem; }
+
+/* ── Kutipan besar di tengah tulisan ──────────────────── */
+.prose .pullquote { margin: 2.5em -1rem; padding: 2rem 1rem; text-align: center; border-block: 2px solid var(--text); }
+.prose .pullquote::before { margin: 0 auto 1rem; }
+
+/* ── Puisi: spread dengan judul vertikal ──────────────── */
+.post--puisi .prose p { white-space: pre-line; font-style: italic; }
+@media (min-width: 760px) {
+  .post--puisi { --lebar: min(100vw - 2rem, 56rem); width: var(--lebar); margin-inline: calc((100% - var(--lebar)) / 2); position: relative; }
+  .post--puisi .puisi-spread { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: start; }
+  .post--puisi .post-header { order: 2; margin: 0; position: sticky; top: 2rem; }
+  .post--puisi .post-title-big { writing-mode: vertical-rl; font-size: clamp(4rem, 9vw, 6.5rem); line-height: .9; max-height: 80vh; }
+  .post--puisi .post-header .post-meta { writing-mode: vertical-rl; position: absolute; left: -1.6rem; top: 0; margin: 0; }
+  .post--puisi .prose { padding-top: 1rem; }
+  .post--puisi::after { content: ""; position: absolute; width: 7rem; height: 7rem; left: -3rem; bottom: 6rem; background: var(--pink); clip-path: polygon(48% 2%, 61% 37%, 98% 39%, 69% 62%, 81% 98%, 50% 77%, 17% 99%, 30% 62%, 2% 40%, 39% 38%); z-index: -1; }
+}
+
+/* ── Pintu pembuka ────────────────────────────────────── */
+.pintu { display: none; }
+html.intro { overflow: hidden; }
+.intro .pintu {
+  display: grid; place-items: center;
+  position: fixed; inset: 0; z-index: 90;
+  background: var(--ink); color: var(--paper);
+  perspective: 1400px; overflow: hidden;
+  transition: opacity .7s ease .5s;
+}
+.pintu-langit { position: absolute; inset: 0; }
+.kerlip { position: absolute; fill: currentColor; color: var(--butter); animation: kerlip 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * -.37s); }
+.kerlip:nth-child(3n) { color: var(--pink); }
+.kerlip:nth-child(4n) { color: var(--paper); }
+@keyframes kerlip { 50% { transform: scale(.4) rotate(40deg); opacity: .35; } }
+
+.pintu-kusen {
+  position: relative; z-index: 1;
+  width: min(70vw, 22rem); height: min(68vh, 34rem);
+  border: 10px solid var(--butter); border-bottom: 0;
+  border-radius: 11rem 11rem 0 0;
+  transform-style: preserve-3d; cursor: pointer;
+  transition: transform 1.2s cubic-bezier(.7,0,.25,1);
+}
+.pintu-ruang {
+  position: absolute; inset: 0; overflow: hidden;
+  border-radius: 10rem 10rem 0 0;
+  display: grid; place-items: center; align-content: center;
+  background: radial-gradient(circle at 50% 50%, var(--paper) 0, var(--butter) 35%, color-mix(in srgb, var(--butter) 50%, var(--pink)) 75%, var(--pink) 100%);
+}
+.pintu-cahaya { position: absolute; inset: -30%; background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--paper) 45%, transparent) 0 6deg, transparent 6deg 18deg); animation: putar 18s linear infinite; opacity: 0; transition: opacity .8s ease .6s; }
+@keyframes putar { to { transform: rotate(360deg); } }
+.pintu-planet { position: relative; width: 82%; transform: scale(.15) rotate(-40deg); opacity: 0; filter: drop-shadow(0 12px 18px rgba(0,0,0,.25)); }
+.pintu-sapaan { position: relative; margin: -.5rem 1rem 0; text-align: center; color: var(--ink); font: 400 clamp(1.8rem, 6vw, 2.4rem)/1.1 var(--script); opacity: 0; transform: translateY(1rem); transition: opacity .8s ease 1.3s, transform .8s ease 1.3s; }
+
+.daun {
+  position: absolute; top: 0; bottom: 0; width: 50%;
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  display: flex; flex-direction: column; gap: 8%; padding: 22% 14% 14%;
+  backface-visibility: hidden;
+  transition: transform 1.4s cubic-bezier(.6,0,.2,1);
+  box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--pink) 70%, black);
+}
+.daun-kiri { left: 0; transform-origin: left center; border-radius: 10rem 0 0 0; }
+.daun-kanan { right: 0; transform-origin: right center; border-radius: 0 10rem 0 0; }
+.daun .panel { flex: 1; border: 2px solid var(--butter); border-radius: 4px; }
+.daun .panel:first-child { flex: 1.4; }
+.daun-kiri .panel:first-child { border-top-left-radius: 6rem; }
+.daun-kanan .panel:first-child { border-top-right-radius: 6rem; }
+.gagang { position: absolute; top: 55%; width: 14px; height: 14px; border-radius: 50%; background: var(--butter); border: 2px solid var(--ink); }
+.daun-kiri .gagang { right: 10px; }
+.daun-kanan .gagang { left: 10px; }
+.pintu-papan { position: absolute; left: 50%; top: -5.2rem; transform: translateX(-50%); margin: 0; white-space: nowrap; color: var(--butter); font: 400 3rem/1 var(--script); }
+.pintu-ketuk {
+  position: absolute; bottom: max(5vh, 1.5rem); left: 50%; transform: translateX(-50%); z-index: 2;
+  padding: .7rem 1.4rem; border: 2px solid var(--butter); border-radius: 999px;
+  background: none; color: var(--butter);
+  font: 400 1rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase;
+  animation: denyut 1.6s ease-in-out infinite; cursor: pointer;
+}
+@keyframes denyut { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--butter) 20%, transparent); } }
+.pintu-lewati { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 2; background: none; border: 0; color: color-mix(in srgb, var(--paper) 60%, var(--ink)); font: 400 .85rem var(--display); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.pintu-lewati:hover { color: var(--paper); }
+
+/* Pintu terbuka → planet hati muncul besar */
+.pintu.is-open .daun-kiri { transform: rotateY(-105deg); }
+.pintu.is-open .daun-kanan { transform: rotateY(105deg); }
+.pintu.is-open .pintu-cahaya { opacity: 1; }
+.pintu.is-open .pintu-planet { animation: planet-muncul 1.3s cubic-bezier(.3,1.5,.5,1) .55s forwards, melayang 3s ease-in-out 1.9s infinite; }
+.pintu.is-open .pintu-sapaan { opacity: 1; transform: none; }
+.pintu.is-open .pintu-ketuk { opacity: 0; transition: opacity .3s; animation: none; }
+@keyframes planet-muncul { to { transform: scale(1) rotate(-8deg); opacity: 1; } }
+@keyframes melayang { 0%, 100% { transform: scale(1) rotate(-8deg) translateY(0); opacity: 1; } 50% { transform: scale(1.04) rotate(-4deg) translateY(-6px); opacity: 1; } }
+/* Lalu kita melangkah masuk */
+.pintu.is-enter .pintu-kusen { transform: scale(9); }
+.pintu.is-enter { opacity: 0; }
+.pintu.is-enter .pintu-papan, .pintu.is-enter .pintu-lewati { opacity: 0; }
+
+@media (max-width: 760px) {
+  .spread, .book-body { grid-template-columns: 1fr; }
+  .book-body { gap: 2rem; }
+  .spread-cover { padding: 2.5rem 1.5rem; }
+  .spread-text { padding: 2rem 1.25rem; }
+}
+@media (max-width: 480px) {
+  .book { grid-template-columns: 7rem 1fr; gap: 1.1rem; }
+  .book-title { font-size: 1.6rem; }
+  .book-tagline { font-size: 1.6rem; }
+  .ebook-box { grid-template-columns: 1fr; padding: 1.5rem; }
+  .chapter-list a { grid-template-columns: 3rem 1fr; }
+  .chapter-go { display: none; }
+  .pintu-papan { font-size: 2.4rem; top: -4.2rem; }
+  .mini-shelf { grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+  .mini-shelf li:nth-child(4) { display: none; }
 }

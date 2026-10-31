@@ -105,7 +105,7 @@
   var smooth = { on: motion && fine, target: window.scrollY, current: window.scrollY, moving: false };
   if (smooth.on) {
     window.addEventListener('wheel', function (e) {
-      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY) || root.classList.contains('intro')) return;
       if (e.target.closest && e.target.closest('pre, .reader-panel')) return;
       e.preventDefault();
       var d = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
@@ -129,11 +129,13 @@
     el.classList.add('split');
   };
   if (motion && 'IntersectionObserver' in window) {
-    document.querySelectorAll('.post-title-big, .page-title, .intro-hello').forEach(split);
-    var targets = document.querySelectorAll('.section-label, .post-item, .mini-shelf li, .book, .intro-text, .intro-more, .see-all, .post-subtitle, .post-header .post-meta, .prose > *, .post-end, .post-nav, .page-lead, .filters, .year-group');
+    document.querySelectorAll('.post-title-big, .page-title, .intro-hello, .spread-title').forEach(function (el) {
+      if (!el.children.length) split(el);
+    });
+    var targets = document.querySelectorAll('.section-label, .post-item, .mini-shelf li, .book, .intro-text, .intro-more, .see-all, .post-subtitle, .post-header .post-meta, .prose > *, .post-end, .post-nav, .page-lead, .filters, .year-group, .spread, .book-body .pullquote, .ebook-box, .chapter-list li, .ebook-card, .empty-note');
     targets.forEach(function (el) { el.classList.add('reveal'); });
     // Elemen yang bersebelahan muncul bergantian
-    document.querySelectorAll('.mini-shelf li').forEach(function (el, i) { el.style.setProperty('--delay', (i * 0.08) + 's'); });
+    document.querySelectorAll('.mini-shelf li, .ebook-card').forEach(function (el, i) { el.style.setProperty('--delay', (i % 4 * 0.08) + 's'); });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
@@ -168,6 +170,42 @@
     document.addEventListener('mouseleave', function () { cursor.classList.add('is-hidden'); });
     window.addEventListener('mousedown', function () { cursor.classList.add('is-down'); });
     window.addEventListener('mouseup', function () { cursor.classList.remove('is-down'); });
+  }
+
+  // Pintu pembuka beranda: ketuk → pintu terbuka → planet hati → masuk
+  var pintu = document.querySelector('.pintu');
+  if (pintu && root.classList.contains('intro')) {
+    var terbuka = false, selesai = false;
+    var tutup = function () {
+      if (selesai) return;
+      selesai = true;
+      root.classList.remove('intro');
+      pintu.remove();
+      try { sessionStorage.setItem('pintu', '1'); } catch (e) {}
+      window.scrollTo(0, 0);
+      smooth.target = smooth.current = 0;
+    };
+    var buka = function () {
+      if (terbuka) return;
+      terbuka = true;
+      pintu.classList.add('is-open');
+      setTimeout(function () { pintu.classList.add('is-enter'); }, 3000);
+      setTimeout(tutup, 4300);
+    };
+    pintu.querySelector('.pintu-ketuk').addEventListener('click', buka);
+    pintu.querySelector('.pintu-kusen').addEventListener('click', buka);
+    pintu.querySelector('.pintu-lewati').addEventListener('click', tutup);
+    window.addEventListener('wheel', buka, { passive: true });
+    window.addEventListener('touchmove', buka, { passive: true });
+    document.addEventListener('keydown', function (e) {
+      if (selesai) return;
+      if (e.key === 'Escape') tutup();
+      else if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); buka(); }
+    });
+    pintu.querySelector('.pintu-ketuk').focus({ preventScroll: true });
+    setTimeout(buka, 8000);
+  } else if (pintu) {
+    pintu.remove();
   }
 
   var lastY = window.scrollY;

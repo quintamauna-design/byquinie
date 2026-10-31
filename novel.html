@@ -6,25 +6,27 @@ permalink: /novel/
 <h1 class="page-title">Rak novel</h1>
 <p class="page-lead">Cerita-cerita panjang yang pernah — dan sedang — aku tulis.</p>
 
+{%- assign rak = site.novel | sort: "urutan" %}
 <ul class="shelf">
-  {%- for b in site.data.novel %}
+  {%- for b in rak %}
   {%- assign st = b.status | default: "Draf" | slugify %}
-  <li class="book" id="{{ b.judul | slugify }}">
-    {% include book-cover.html book=b %}
+  {%- assign jumlah_bab = site.bab | where: "novel", b.title | size %}
+  <li class="book">
+    <a class="book-cover-link" href="{{ b.url | relative_url }}" aria-label="{{ b.title }}">{% include book-cover.html book=b %}</a>
     <div class="book-info">
       <p class="book-meta">
         <span class="badge badge-{{ st }}">{{ b.status | default: "Draf" }}</span>
         {%- if b.genre %} · {{ b.genre }}{% endif %}
         {%- if b.tahun %} · {{ b.tahun }}{% endif %}
-        {%- if b.bab %} · {{ b.bab }} bab{% endif %}
+        {%- if jumlah_bab > 0 %} · {{ jumlah_bab }} bab{% endif %}
       </p>
-      <h2 class="book-title">{{ b.judul }}</h2>
-      {%- if b.sinopsis %}<p class="book-synopsis">{{ b.sinopsis }}</p>{% endif %}
-      {%- if b.tautan %}
-      <p class="book-links">
-        {%- for t in b.tautan %}<a href="{{ t.url }}">{{ t.label }} →</a>{% endfor %}
+      <h2 class="book-title"><a href="{{ b.url | relative_url }}">{{ b.title }}</a></h2>
+      {%- if b.tagline %}<p class="book-tagline">{{ b.tagline }}</p>{% endif %}
+      <p class="book-synopsis">{{ b.excerpt | strip_html | normalize_whitespace | truncatewords: 30 }}</p>
+      <p class="btn-row">
+        <a class="btn" href="{{ b.url | relative_url }}">Lihat buku →</a>
+        {%- if b.ebook.jual %}<a class="btn btn-garis" href="{{ b.url | relative_url }}#ebook">E-book</a>{% endif %}
       </p>
-      {%- endif %}
     </div>
   </li>
   {%- endfor %}

@@ -1,0 +1,182 @@
+# ─────────────────────────────────────────────────────────────
+#  PANEL ADMIN byquinie (Pages CMS — https://pagescms.org)
+#  Masuk di https://app.pagescms.org pakai akun GitHub,
+#  pilih repo byquinie, lalu semua menu di bawah ini muncul.
+# ─────────────────────────────────────────────────────────────
+
+media:
+  input: assets/img
+  output: /assets/img
+
+content:
+  # ── Tulisan (esai, cerpen, puisi, catatan) ──────────────
+  - name: tulisan
+    label: Tulisan
+    type: collection
+    path: _posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [ title, category, date ]
+      sort: [ date ]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Judul, type: string, required: true }
+      - { name: date, label: Tanggal, type: date }
+      - name: category
+        label: Kategori
+        type: select
+        options:
+          values: [ Esai, Cerpen, Puisi, Catatan ]
+      - { name: subtitle, label: Subjudul (opsional), type: string }
+      - name: kutipan
+        label: Kalimat favorit (opsional)
+        description: Tampil besar dengan tulisan sambung setelah paragraf pertama.
+        type: text
+      - name: bentuk
+        label: Bentuk
+        description: Pilih "puisi" supaya setiap baris tetap patah di tempatnya dan judulnya tegak di samping.
+        type: select
+        options:
+          values: [ biasa, puisi ]
+      - { name: body, label: Isi tulisan, type: rich-text }
+
+  # ── Novel (satu entri = satu buku) ──────────────────────
+  - name: novel
+    label: Novel & e-book
+    type: collection
+    path: _novel
+    filename: "{primary}.md"
+    view:
+      fields: [ title, status, urutan ]
+      default:
+        sort: urutan
+        order: asc
+    fields:
+      - { name: title, label: Judul novel, type: string, required: true }
+      - { name: urutan, label: Urutan di rak (1 = paling depan), type: number }
+      - { name: tahun, label: Tahun, type: number }
+      - { name: genre, label: Genre, type: string }
+      - name: status
+        label: Status
+        type: select
+        options:
+          values: [ Selesai, Sedang ditulis, Draf ]
+      - name: sampul
+        label: Gambar sampul (opsional)
+        description: Kalau kosong, sampul dibuat otomatis dari judul dan warna.
+        type: image
+      - name: warna
+        label: Warna sampul
+        type: select
+        options:
+          values: [ pink, kuning, hitam, putih ]
+      - { name: tagline, label: Tagline (tulisan sambung), type: string }
+      - { name: kutipan, label: Kutipan favorit dari novel, type: text }
+      - name: toko
+        label: Toko buku online
+        description: Tombol "Dapatkan bukunya di". Isi nama toko dan link-nya.
+        type: object
+        list: true
+        fields:
+          - { name: nama, label: Nama toko, type: string }
+          - { name: url, label: Link, type: string }
+      - name: ebook
+        label: E-book
+        type: object
+        fields:
+          - { name: jual, label: Jual e-book ini, type: boolean }
+          - { name: harga, label: Harga (angka saja, mis. 35000), type: number }
+          - { name: harga_coret, label: Harga sebelum diskon (opsional), type: number }
+          - { name: format, label: Format, type: string, description: "mis. PDF & EPUB" }
+          - { name: halaman, label: Jumlah halaman, type: number }
+          - name: link
+            label: Link pembayaran
+            description: Link halaman bayar dari Lynk.id, Mayar, KaryaKarsa, Gumroad, dll. Kalau kosong, tombolnya jadi pesan lewat WhatsApp.
+            type: string
+          - { name: catatan, label: Catatan untuk pembeli, type: string }
+      - { name: body, label: Sinopsis, type: rich-text }
+
+  # ── Bab novel ───────────────────────────────────────────
+  - name: bab
+    label: Bab novel
+    type: collection
+    path: _bab
+    filename: "{primary}.md"
+    view:
+      fields: [ title, novel, bab ]
+    fields:
+      - { name: title, label: Judul bab, type: string, required: true }
+      - name: novel
+        label: Judul novel
+        description: Tulis persis sama dengan judul di menu "Novel & e-book".
+        type: string
+        required: true
+      - { name: bab, label: Nomor bab, type: number, required: true }
+      - { name: body, label: Isi bab, type: rich-text }
+
+  # ── Halaman Tentang ─────────────────────────────────────
+  - name: tentang
+    label: Halaman Tentang
+    type: file
+    path: tentang.md
+    fields:
+      - { name: title, label: Judul, type: string }
+      - { name: body, label: Isi, type: rich-text }
+
+  # ── Warna, huruf, gambar beranda, pintu ─────────────────
+  - name: tampilan
+    label: Pengaturan tampilan
+    type: file
+    path: _data/tampilan.yml
+    fields:
+      - name: warna
+        label: Warna
+        description: Kode warna hex, mis. #de6593
+        type: object
+        fields:
+          - { name: pink, label: Pink, type: string }
+          - { name: kuning, label: Kuning mentega, type: string }
+          - { name: hitam, label: Hitam, type: string }
+          - { name: putih, label: Putih, type: string }
+      - name: font
+        label: Huruf
+        type: object
+        fields:
+          - name: judul
+            label: Huruf judul
+            type: select
+            options:
+              values: [ Anton, Bebas Neue, Oswald, Archivo Black, Abril Fatface ]
+          - name: sambung
+            label: Tulisan sambung
+            type: select
+            options:
+              values: [ Mrs Saint Delafield, Herr Von Muellerhoff, Monsieur La Doulaise, Pinyon Script, Great Vibes ]
+          - name: isi
+            label: Huruf isi tulisan (pembaca tetap bisa menggantinya)
+            type: select
+            options:
+              values: [ inter, lora, garamond, courier ]
+      - name: pintu
+        label: Pintu pembuka beranda
+        type: object
+        fields:
+          - { name: tampil, label: Tampilkan pintu, type: boolean }
+          - { name: sapaan, label: Sapaan setelah pintu terbuka, type: string }
+          - { name: ajakan, label: Tulisan tombol, type: string }
+      - name: beranda
+        label: Beranda
+        type: object
+        fields:
+          - { name: label, label: Label kecil di atas nama, type: string }
+          - { name: foto, label: Foto di blok kuning (opsional), type: image }
+      - name: toko
+        label: Toko
+        type: object
+        fields:
+          - name: whatsapp
+            label: Nomor WhatsApp
+            description: Pakai kode negara tanpa + atau spasi, mis. 6281234567890
+            type: string

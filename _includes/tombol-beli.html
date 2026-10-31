@@ -1,0 +1,11 @@
+{%- comment -%} Tombol beli e-book: link toko → WhatsApp → "segera hadir" {%- endcomment -%}
+{%- assign b = include.book -%}
+{%- assign wa = site.data.tampilan.toko.whatsapp -%}
+{%- if b.ebook.link and b.ebook.link != "" %}
+<a class="btn" href="{{ b.ebook.link }}" target="_blank" rel="noopener">Beli e-book →</a>
+{%- elsif wa and wa != "" %}
+{%- capture pesan %}Halo {{ site.author }}, aku mau beli e-book "{{ b.title }}".{% endcapture %}
+<a class="btn" href="https://wa.me/{{ wa }}?text={{ pesan | url_encode }}" target="_blank" rel="noopener">Pesan lewat WhatsApp →</a>
+{%- else %}
+<span class="btn" aria-disabled="true">Segera hadir</span>
+{%- endif %}

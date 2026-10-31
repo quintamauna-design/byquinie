@@ -3,11 +3,14 @@ layout: default
 ---
 <section class="hero" aria-label="{{ site.title }}">
   <div class="hero-inner">
-    <p class="hero-kicker">Sunstellar <span>·</span> ruang menulis</p>
+    <p class="hero-kicker">{{ site.data.tampilan.beranda.label | default: "Sunstellar · ruang menulis" | replace: "·", "<span>·</span>" }}</p>
     <p class="hero-mark" aria-hidden="true"><span class="hero-by">by</span><span class="hero-name">Quinie</span></p>
     <p class="hero-tag">{{ site.tagline }}</p>
     <p class="hero-hint" aria-hidden="true">Gulir pelan-pelan ↓</p>
   </div>
+  {%- if site.data.tampilan.beranda.foto and site.data.tampilan.beranda.foto != "" %}
+  <img class="hero-foto" src="{{ site.data.tampilan.beranda.foto | relative_url }}" alt="" data-speed="0.1">
+  {%- endif %}
   <svg class="star star-big" data-speed="-0.12" data-spin="0.08" aria-hidden="true"><use href="#bintang"/></svg>
   <svg class="star star-pink" data-speed="0.18" data-spin="-0.12" aria-hidden="true"><use href="#bintang"/></svg>
   <svg class="star star-small" data-speed="0.3" data-spin="0.2" aria-hidden="true"><use href="#bintang"/></svg>
@@ -30,13 +33,14 @@ layout: default
   <p class="intro-more"><a href="{{ '/tentang/' | relative_url }}">Kenalan lebih jauh →</a></p>
 </section>
 
-{%- if site.data.novel.size > 0 %}
+{%- assign rak = site.novel | sort: "urutan" %}
+{%- if rak.size > 0 %}
 <section class="home-shelf">
   <h2 class="section-label">Rak novel</h2>
   <ul class="mini-shelf">
-    {%- for b in site.data.novel limit: 4 %}
+    {%- for b in rak limit: 4 %}
     <li>
-      <a href="{{ '/novel/' | relative_url }}#{{ b.judul | slugify }}" title="{{ b.judul }}">
+      <a href="{{ b.url | relative_url }}" title="{{ b.title }}">
         {% include book-cover.html book=b %}
         <span class="mini-status">{{ b.status | default: "Draf" }}</span>
       </a>

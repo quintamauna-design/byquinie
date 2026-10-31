@@ -1,0 +1,37 @@
+---
+layout: default
+---
+{%- assign buku = site.novel | where: "title", page.novel | first -%}
+{%- assign daftar_bab = site.bab | where: "novel", page.novel | sort: "bab" -%}
+{%- for c in daftar_bab %}{% if c.url == page.url %}{% assign i = forloop.index0 %}{% endif %}{% endfor -%}
+{%- assign i_prev = i | minus: 1 -%}
+{%- assign i_next = i | plus: 1 -%}
+<div class="progress" aria-hidden="true"><span></span></div>
+<article class="post">
+  <header class="post-header">
+    {%- if buku %}
+    <p class="chapter-kicker"><a href="{{ buku.url | relative_url }}">{{ buku.title }}</a></p>
+    {%- endif %}
+    <h1 class="post-title-big"><span class="chapter-number">Bab {{ page.bab }}</span>{{ page.title }}</h1>
+    <p class="post-meta">{% include reading-time.html content=content %}</p>
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <p class="post-end" aria-hidden="true">★</p>
+
+  <nav class="post-nav" aria-label="Bab lain">
+    {%- if i > 0 %}
+    {%- assign c = daftar_bab[i_prev] %}
+    <a class="prev" href="{{ c.url | relative_url }}"><small>← Bab {{ c.bab }}</small><span>{{ c.title }}</span></a>
+    {%- else %}<span></span>{% endif %}
+    {%- if i_next < daftar_bab.size %}
+    {%- assign c = daftar_bab[i_next] %}
+    <a class="next" href="{{ c.url | relative_url }}"><small>Bab {{ c.bab }} →</small><span>{{ c.title }}</span></a>
+    {%- elsif buku %}
+    <a class="next" href="{{ buku.url | relative_url }}"><small>Selesai →</small><span>Kembali ke {{ buku.title }}</span></a>
+    {%- endif %}
+  </nav>
+</article>
