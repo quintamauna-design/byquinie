@@ -95,4 +95,111 @@
     var hash = location.hash.slice(1);
     if (hash && document.querySelector('.chip[data-filter="' + hash + '"]')) apply(hash);
   }
+  // ── Gerak: scroll halus, munculan, judul besar, pita berjalan ──
+  var motion = root.classList.contains('motion');
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var maxScroll = function () { return document.documentElement.scrollHeight - window.innerHeight; };
+
+  // Scroll halus untuk roda mouse/trackpad (layar sentuh tetap bawaan)
+  var smooth = { on: motion && fine, target: window.scrollY, current: window.scrollY, moving: false };
+  if (smooth.on) {
+    window.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (e.target.closest && e.target.closest('pre, .reader-panel')) return;
+      e.preventDefault();
+      var d = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
+      if (!smooth.moving) smooth.target = smooth.current = window.scrollY;
+      smooth.target = Math.max(0, Math.min(maxScroll(), smooth.target + d));
+      smooth.moving = true;
+    }, { passive: false });
+    // Keyboard, scrollbar, atau tautan jangkar: ikut posisi aslinya
+    ['keydown', 'mousedown', 'touchstart'].forEach(function (ev) {
+      window.addEventListener(ev, function () { smooth.moving = false; }, { passive: true });
+    });
+  }
+
+  // Munculan saat masuk layar
+  var split = function (el) {
+    var words = el.textContent.trim().split(/\s+/);
+    el.setAttribute('aria-label', el.textContent.trim());
+    el.innerHTML = words.map(function (w, i) {
+      return '<span class="w" aria-hidden="true"><span style="--i:' + i + '">' + w.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span></span>';
+    }).join(' ');
+    el.classList.add('split');
+  };
+  if (motion && 'IntersectionObserver' in window) {
+    document.querySelectorAll('.post-title-big, .page-title, .intro-hello').forEach(split);
+    var targets = document.querySelectorAll('.section-label, .post-item, .mini-shelf li, .book, .intro-text, .intro-more, .see-all, .post-subtitle, .post-header .post-meta, .prose > *, .post-end, .post-nav, .page-lead, .filters, .year-group');
+    targets.forEach(function (el) { el.classList.add('reveal'); });
+    // Elemen yang bersebelahan muncul bergantian
+    document.querySelectorAll('.mini-shelf li').forEach(function (el, i) { el.style.setProperty('--delay', (i * 0.08) + 's'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal, .split').forEach(function (el) { io.observe(el); });
+    document.querySelectorAll('.mini-shelf a').forEach(function (el, i) { el.dataset.speed = [0.06, -0.04, 0.09, -0.02][i % 4]; });
+  }
+
+  var hero = document.querySelector('.hero');
+  var track = document.querySelector('.marquee-track');
+  var parallax = document.querySelectorAll('[data-speed]');
+  var marquee = { x: 0, dir: 1 };
+
+  // Kursor planet
+  var cursor = document.querySelector('.cursor');
+  var mouse = { x: -100, y: -100 }, pos = { x: -100, y: -100 };
+  if (cursor && fine) {
+    root.classList.add('has-cursor');
+    window.addEventListener('mousemove', function (e) {
+      mouse.x = e.clientX; mouse.y = e.clientY;
+      cursor.classList.remove('is-hidden');
+      cursor.classList.toggle('is-hover', !!(e.target.closest && e.target.closest('a, button, .chip, label')));
+    }, { passive: true });
+    document.addEventListener('mouseleave', function () { cursor.classList.add('is-hidden'); });
+    window.addEventListener('mousedown', function () { cursor.classList.add('is-down'); });
+    window.addEventListener('mouseup', function () { cursor.classList.remove('is-down'); });
+  }
+
+  var lastY = window.scrollY;
+  var tick = function () {
+    if (smooth.on && smooth.moving) {
+      smooth.current = lerp(smooth.current, smooth.target, 0.09);
+      if (Math.abs(smooth.target - smooth.current) < 0.5) { smooth.current = smooth.target; smooth.moving = false; }
+      window.scrollTo(0, smooth.current);
+    }
+    var y = window.scrollY, v = y - lastY;
+    lastY = y;
+
+    if (hero) {
+      var p = Math.max(0, Math.min(1, y / hero.offsetHeight));
+      hero.style.setProperty('--p', p.toFixed(4));
+    }
+    if (track) {
+      if (Math.abs(v) > 0.5) marquee.dir = v > 0 ? 1 : -1;
+      var speed = motion ? 0.6 + Math.min(Math.abs(v), 60) * 0.25 : 0;
+      marquee.x -= speed * marquee.dir;
+      var half = track.scrollWidth / 2;
+      if (half) marquee.x = ((marquee.x % half) - half) % half;
+      track.style.transform = 'translate3d(' + marquee.x + 'px,0,0)';
+    }
+    if (motion) {
+      parallax.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        var off = (r.top + r.height / 2 - window.innerHeight / 2) * Number(el.dataset.speed);
+        el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+      });
+    }
+    if (cursor && fine) {
+      var t = motion ? 0.22 : 1;
+      var dx = mouse.x - pos.x;
+      pos.x = lerp(pos.x, mouse.x, t); pos.y = lerp(pos.y, mouse.y, t);
+      var tilt = Math.max(-25, Math.min(25, dx * 0.6));
+      cursor.style.transform = 'translate3d(' + pos.x + 'px,' + pos.y + 'px,0) rotate(' + tilt.toFixed(1) + 'deg)';
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 })();

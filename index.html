@@ -1,6 +1,20 @@
 ---
 layout: default
 ---
+<section class="hero" aria-label="{{ site.title }}">
+  <p class="hero-mark" aria-hidden="true"><span class="hero-by">by</span><span class="hero-name">quinie</span></p>
+  <p class="hero-tag">{{ site.tagline }}</p>
+  <p class="hero-hint" aria-hidden="true">gulir pelan-pelan ↓</p>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    {%- for i in (1..4) %}
+    <span>Esai</span><span class="star">✦</span><span>Cerpen</span><span class="star">✦</span><span>Puisi</span><span class="star">✦</span><span>Catatan</span><span class="star">✦</span><span>Novel</span><span class="star">✦</span>
+    {%- endfor %}
+  </div>
+</div>
+
 <section class="intro">
   <p class="intro-hello">Halo, aku {{ site.author }}.</p>
   <p class="intro-text">{{ site.tagline }} Di sini aku menyimpan esai, cerita pendek, puisi, dan catatan yang lahir dari hari-hari biasa — supaya tidak hilang begitu saja.</p>

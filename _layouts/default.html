@@ -26,6 +26,7 @@
       if (f) r.dataset.font = f;
       if (u) r.style.setProperty('--scale', u / 100);
     } catch (e) {}
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
   </script>
 </head>
 <body>
@@ -36,6 +37,25 @@
       {{ content }}
     </main>
     {% include footer.html %}
+  </div>
+  <div class="cursor" aria-hidden="true">
+    <svg viewBox="0 0 64 64" width="44" height="44">
+      <defs>
+        <radialGradient id="planet-pink" cx="35%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#ffe3ef"/>
+          <stop offset=".45" stop-color="#ff8fc0"/>
+          <stop offset="1" stop-color="#e2428a"/>
+        </radialGradient>
+      </defs>
+      <!-- cincin bagian belakang -->
+      <path class="ring" d="M6 38 C6 30 58 22 58 28" fill="none" stroke="#f06aa8" stroke-width="3.2" stroke-linecap="round" opacity=".7"/>
+      <!-- planetnya berbentuk hati -->
+      <path d="M32 52 C14 40 10 30 14 22 C18 14 28 14 32 22 C36 14 46 14 50 22 C54 30 50 40 32 52 Z" fill="url(#planet-pink)"/>
+      <ellipse cx="24" cy="24" rx="4" ry="2.4" fill="#fff" opacity=".7" transform="rotate(-30 24 24)"/>
+      <!-- cincin bagian depan -->
+      <path class="ring" d="M58 28 C58 36 6 44 6 38" fill="none" stroke="#ff8cc0" stroke-width="3.2" stroke-linecap="round"/>
+      <circle class="moon" cx="56" cy="12" r="2.6" fill="#ff5fa2"/>
+    </svg>
   </div>
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 </body>
