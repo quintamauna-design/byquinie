@@ -1,0 +1,2 @@
+{%- assign e = include.ebook -%}
+<p class="harga">{% if e.harga and e.harga > 0 %}{% include rupiah.html n=e.harga %}{% else %}Gratis{% endif %}{% if e.harga_coret and e.harga_coret > e.harga %}<s>{% include rupiah.html n=e.harga_coret %}</s>{% endif %}</p>

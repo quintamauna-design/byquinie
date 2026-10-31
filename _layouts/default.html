@@ -1,5 +1,10 @@
 <!doctype html>
-<html lang="{{ site.lang | default: 'id' }}" data-font="{{ site.tampilan.font | default: 'lora' }}" style="--scale: {{ site.tampilan.ukuran | default: 100 | divided_by: 100.0 }}">
+{%- assign tp = site.data.tampilan -%}
+{%- assign font_judul = tp.font.judul | default: "Anton" -%}
+{%- assign font_sambung = tp.font.sambung | default: "Mrs Saint Delafield" -%}
+{%- assign pintu = false -%}
+{%- if page.url == '/' and tp.pintu.tampil != false %}{% assign pintu = true %}{% endif -%}
+<html lang="{{ site.lang | default: 'id' }}" data-font="{{ tp.font.isi | default: site.tampilan.font | default: 'inter' }}" style="--scale: {{ site.tampilan.ukuran | default: 100 | divided_by: 100.0 }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,13 +17,26 @@
   <meta name="description" content="{{ desc }}">
   <meta property="og:title" content="{{ page.title | default: site.title }}">
   <meta property="og:description" content="{{ desc }}">
+ {%- if page.noindex %}
+  <meta name="robots" content="noindex">
+  {%- endif %}
   <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✎</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 4l12 34h36L69 60l11 36-30-22-30 22 11-36L2 38h36z' fill='%23de6593'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family={{ font_judul | replace: ' ', '+' }}&family={{ font_sambung | replace: ' ', '+' }}&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <style>
+    :root {
+      --pink: {{ tp.warna.pink | default: "#de6593" }};
+      --butter: {{ tp.warna.kuning | default: "#f4e35c" }};
+      --ink: {{ tp.warna.hitam | default: "#0b0b0b" }};
+      --paper: {{ tp.warna.putih | default: "#ffffff" }};
+      --display: "{{ font_judul }}", Impact, "Arial Narrow", sans-serif;
+      --script: "{{ font_sambung }}", "Snell Roundhand", cursive;
+    }
+  </style>
   <script>
     try {
       var r = document.documentElement, t = localStorage.getItem('tema'), f = localStorage.getItem('font'), u = localStorage.getItem('ukuran');
@@ -26,9 +44,37 @@
       if (f) r.dataset.font = f;
       if (u) r.style.setProperty('--scale', u / 100);
     } catch (e) {}
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion');
+      {%- if pintu %}
+      try { if (!sessionStorage.getItem('pintu')) document.documentElement.classList.add('intro'); } catch (e) {}
+      {%- endif %}
+    }
   </script>
 </head>
-<body>
+<body{% if page.url == '/' %} class="is-home"{% endif %}>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <radialGradient id="planet-pink" cx="35%" cy="30%" r="75%">
+        <stop offset="0" style="stop-color: color-mix(in srgb, var(--pink) 18%, white)"/>
+        <stop offset=".45" style="stop-color: color-mix(in srgb, var(--pink) 85%, white)"/>
+        <stop offset="1" style="stop-color: color-mix(in srgb, var(--pink) 80%, black)"/>
+      </radialGradient>
+    </defs>
+    <symbol id="bintang" viewBox="0 0 100 100"><path d="M48 2l13 35 37 2-29 23 12 36-31-21-33 22 13-37L2 40l37-2z"/></symbol>
+    <!-- planet berbentuk hati dengan cincin kuning mentega -->
+    <symbol id="planet-hati" viewBox="0 0 64 64">
+      <path d="M6 38 C6 30 58 22 58 28" fill="none" style="stroke: var(--ink)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M6 38 C6 30 58 22 58 28" fill="none" style="stroke: var(--butter)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M32 52 C14 40 10 30 14 22 C18 14 28 14 32 22 C36 14 46 14 50 22 C54 30 50 40 32 52 Z" fill="url(#planet-pink)" style="stroke: var(--ink)" stroke-width="1.4"/>
+      <ellipse cx="24" cy="24" rx="4" ry="2.4" fill="#fff" opacity=".75" transform="rotate(-30 24 24)"/>
+      <path d="M58 28 C58 36 6 44 6 38" fill="none" style="stroke: var(--ink)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M58 28 C58 36 6 44 6 38" fill="none" style="stroke: var(--butter)" stroke-width="2.6" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+  {%- if pintu %}
+  {% include pintu.html %}
+  {%- endif %}
   <a class="skip-link" href="#isi">Langsung ke isi</a>
   <div class="wrap">
     {% include header.html %}
@@ -36,6 +82,13 @@
       {{ content }}
     </main>
     {% include footer.html %}
+  </div>
+  <div class="cursor" aria-hidden="true">
+    <svg viewBox="0 0 64 64" width="44" height="44">
+      <use href="#planet-hati"/>
+      <!-- bintang kecil yang mengorbit -->
+      <path class="moon" d="M55 5l2 5 5 .3-4 3.2 1.6 5-4.4-3-4.6 3 1.8-5.2-4-3 5.2-.3z" style="fill: var(--ink)"/>
+    </svg>
   </div>
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 </body>

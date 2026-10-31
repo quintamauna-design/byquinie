@@ -1,8 +1,11 @@
 ---
 layout: default
 ---
+{%- assign puisi = false -%}
+{%- if page.bentuk == "puisi" or page.category == "Puisi" %}{% assign puisi = true %}{% endif -%}
 <div class="progress" aria-hidden="true"><span></span></div>
-<article class="post">
+<article class="post{% if puisi %} post--puisi{% endif %}">
+  <div class="puisi-spread">
   <header class="post-header">
     <p class="post-meta">
       {%- if page.category %}<a class="post-cat" href="{{ '/tulisan/' | relative_url }}#{{ page.category | slugify }}">{{ page.category }}</a> · {% endif -%}
@@ -14,10 +17,20 @@ layout: default
   </header>
 
   <div class="prose">
+    {%- if page.kutipan and page.kutipan != "" %}
+    {%- comment %} Kalimat favorit tampil besar setelah paragraf pertama {% endcomment %}
+    {%- assign bagian = content | split: "</p>" %}
+    {%- for b in bagian %}{{ b }}{% unless forloop.last %}</p>{% endunless %}
+    {%- if forloop.first %}
+    <blockquote class="pullquote">{{ page.kutipan }}</blockquote>
+    {%- endif %}{% endfor %}
+    {%- else %}
     {{ content }}
+    {%- endif %}
+  </div>
   </div>
 
-  <p class="post-end" aria-hidden="true">❦</p>
+  <p class="post-end" aria-hidden="true">★</p>
 
   <nav class="post-nav" aria-label="Tulisan lain">
     {%- if page.previous %}

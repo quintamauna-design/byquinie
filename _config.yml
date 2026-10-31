@@ -12,11 +12,12 @@ lang: id
 url: "https://quintamauna-design.github.io"
 baseurl: "/byquinie"
 
-# Tampilan bawaan (pembaca tetap bisa mengubahnya lewat tombol "Aa")
+# Warna & huruf utama sekarang diatur di _data/tampilan.yml (atau lewat panel admin).
+# Bagian ini cadangan kalau _data/tampilan.yml kosong.
 #   font   : lora (serif lembut) | garamond (klasik) | inter (modern) | courier (mesin tik)
 #   ukuran : 90 | 100 | 110 | 120 | 130  (persen)
 tampilan:
-  font: lora
+  font: inter
   ukuran: 100
 
 # Tautan sosial (kosongkan yang tidak dipakai)
@@ -34,9 +35,23 @@ kramdown:
   hard_wrap: false
   smart_quotes: lsquo,rsquo,ldquo,rdquo
 
+collections:
+  novel:
+    output: true
+    permalink: /novel/:name/
+  bab:
+    output: true
+    permalink: /baca/:name/
+
 defaults:
   - scope: { path: "", type: posts }
     values: { layout: post }
+  - scope: { path: "", type: novel }
+    values: { layout: novel }
+  - scope: { path: "", type: bab }
+    values: { layout: bab }
+  - scope: { path: "tentang.md" }
+    values: { layout: page, permalink: /tentang/ }
   - scope: { path: "" }
     values: { layout: default }
 

@@ -4,7 +4,8 @@
     {%- assign here = page.url -%}
     <a href="{{ '/' | relative_url }}" {% if here == '/' %}aria-current="page"{% endif %}>Beranda</a>
     <a href="{{ '/tulisan/' | relative_url }}" {% if here == '/tulisan/' or page.layout == 'post' %}aria-current="page"{% endif %}>Tulisan</a>
-    <a href="{{ '/novel/' | relative_url }}" {% if here == '/novel/' %}aria-current="page"{% endif %}>Novel</a>
+    <a href="{{ '/novel/' | relative_url }}" {% if here == '/novel/' or page.collection == 'novel' or page.collection == 'bab' %}aria-current="page"{% endif %}>Novel</a>
+    <a href="{{ '/ebook/' | relative_url }}" {% if here == '/ebook/' %}aria-current="page"{% endif %}>E-book</a>
     <a href="{{ '/tentang/' | relative_url }}" {% if here == '/tentang/' %}aria-current="page"{% endif %}>Tentang</a>
     <div class="reader">
       <button class="icon-btn reader-toggle" type="button" aria-expanded="false" aria-controls="reader-panel" title="Atur huruf">Aa</button>

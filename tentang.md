@@ -1,7 +1,5 @@
 ---
-layout: page
 title: Tentang
-permalink: /tentang/
 ---
 
 Halo, aku **Quinie**.

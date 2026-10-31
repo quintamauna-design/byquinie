@@ -1,0 +1,26 @@
+---
+layout: default
+title: E-book
+permalink: /ebook/
+---
+<h1 class="page-title">E-book</h1>
+<p class="page-lead">Bawa pulang ceritanya. Baca kapan saja, di mana saja, tanpa sinyal.</p>
+
+{%- assign daftar = site.novel | where_exp: "b", "b.ebook.jual" | sort: "urutan" %}
+{%- if daftar.size > 0 %}
+<ul class="ebook-grid">
+  {%- for b in daftar %}
+  <li class="ebook-card">
+    <a href="{{ b.url | relative_url }}" aria-label="{{ b.title }}">{% include book-cover.html book=b %}</a>
+    <div>
+      <h2 class="ebook-title"><a href="{{ b.url | relative_url }}">{{ b.title }}</a></h2>
+      <p class="book-meta">{{ b.ebook.format | default: "E-book" }}{% if b.ebook.halaman %} · {{ b.ebook.halaman }} halaman{% endif %}</p>
+    </div>
+    {% include harga.html ebook=b.ebook %}
+    {% include tombol-beli.html book=b %}
+  </li>
+  {%- endfor %}
+</ul>
+{%- else %}
+<p class="empty-note">Belum ada e-book yang dijual. Nanti mampir lagi, ya.</p>
+{%- endif %}

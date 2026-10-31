@@ -1,0 +1,28 @@
+# ─────────────────────────────────────────────────────────────
+#  PENGATURAN TAMPILAN
+#  Bisa diubah lewat panel admin (menu "Pengaturan tampilan")
+#  atau langsung di file ini.
+# ─────────────────────────────────────────────────────────────
+
+warna:
+  pink: "#de6593"
+  kuning: "#f4e35c"     # butter yellow
+  hitam: "#0b0b0b"
+  putih: "#ffffff"
+
+font:
+  judul: Anton                  # huruf tebal ramping untuk judul
+  sambung: Mrs Saint Delafield  # tulisan sambung
+  isi: inter                    # lora | garamond | inter | courier
+
+pintu:
+  tampil: true                  # animasi pintu di beranda, sekali per kunjungan
+  sapaan: Selamat datang di Sunstellar
+  ajakan: ketuk untuk masuk
+
+beranda:
+  label: Sunstellar · ruang menulis
+  foto: ""                      # opsional, foto yang menempel di blok kuning
+
+toko:
+  whatsapp: ""                  # nomor WA untuk pesan e-book, mis. 6281234567890

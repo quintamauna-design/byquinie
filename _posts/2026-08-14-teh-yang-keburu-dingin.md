@@ -2,6 +2,7 @@
 title: Teh yang Keburu Dingin
 category: Esai
 subtitle: Tentang hal-hal baik yang kita tunda sampai lupa rasanya.
+kutipan: Hal-hal baik jarang benar-benar hilang. Kita cuma membiarkannya dingin.
 ---
 
 Ada satu kebiasaan yang tidak pernah berhasil kuhentikan: menyeduh teh, lalu lupa meminumnya. Aku menuang air panas, menunggu warnanya berubah dari bening ke kuning tembaga, menaruh cangkir di sebelah laptop — dan dua jam kemudian menemukannya di sana, dingin, sedikit pahit, dengan selaput tipis di permukaannya seperti kulit yang lupa dipeluk.

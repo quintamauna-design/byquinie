@@ -1,0 +1,21 @@
+{%- assign tp = site.data.tampilan -%}
+<div class="pintu" role="dialog" aria-label="Pintu masuk {{ site.title }}">
+  <div class="pintu-langit" aria-hidden="true">
+    {%- for i in (1..14) %}
+    {%- assign ukuran = i | modulo: 3 | times: 0.5 | plus: 0.7 %}
+    <svg class="kerlip" style="--i: {{ i }}; left: {{ i | times: 37 | modulo: 94 | plus: 2 }}%; top: {{ i | times: 61 | modulo: 92 | plus: 3 }}%; width: {{ ukuran }}rem; height: {{ ukuran }}rem"><use href="#bintang"/></svg>
+    {%- endfor %}
+  </div>
+  <div class="pintu-kusen">
+    <div class="pintu-ruang" aria-hidden="true">
+      <div class="pintu-cahaya"></div>
+      <svg class="pintu-planet" viewBox="0 0 64 64"><use href="#planet-hati"/></svg>
+      <p class="pintu-sapaan">{{ tp.pintu.sapaan | default: "Selamat datang" }}</p>
+    </div>
+    <div class="daun daun-kiri" aria-hidden="true"><span class="panel"></span><span class="panel"></span><span class="gagang"></span></div>
+    <div class="daun daun-kanan" aria-hidden="true"><span class="panel"></span><span class="panel"></span><span class="gagang"></span></div>
+    <p class="pintu-papan" aria-hidden="true">{{ site.title }}</p>
+  </div>
+  <button class="pintu-ketuk" type="button">{{ tp.pintu.ajakan | default: "ketuk untuk masuk" }}</button>
+  <button class="pintu-lewati" type="button">Lewati</button>
+</div>

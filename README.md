@@ -28,32 +28,40 @@ Hal-hal kecil yang perlu tahu:
 - **Puisi**: bungkus dengan `<div class="poem" markdown="1">` … `</div>` supaya setiap baris tetap patah di tempatnya.
 - **Gambar**: taruh di `assets/img/`, lalu tulis `![keterangan](/assets/img/nama.jpg)`.
 
-## Menambah novel
+## Panel admin
 
-Semua novel ada di satu file: `_data/novel.yml`. Tiga novel di sana cuma contoh, jadi ganti dengan novelmu. Setiap novel ditulis seperti ini (perhatikan spasi di depannya):
+Semua isi bisa diubah tanpa menyentuh kode lewat **[Pages CMS](https://pagescms.org)** (gratis):
 
-```yaml
-- judul: Judul Novelmu
-  tahun: 2026
-  genre: Romansa
-  status: Selesai            # Selesai | Sedang ditulis | Draf
-  bab: 20
-  warna: "#7a3b2e"           # warna sampul kalau belum punya gambar
-  sampul: /assets/img/novel/judul-novelmu.jpg   # opsional
-  sinopsis: >-
-    Satu sampai tiga kalimat tentang ceritanya.
-  tautan:                    # opsional
-    - label: Baca di Wattpad
-      url: https://www.wattpad.com/...
-```
+1. Buka https://app.pagescms.org dan masuk dengan akun GitHub.
+2. Pilih repo **byquinie**. Menu-menunya diatur di file `.pages.yml`:
+   - **Tulisan**: esai, cerpen, puisi, catatan. Isi "Kalimat favorit" supaya tampil besar dengan tulisan sambung. Pilih bentuk "puisi" supaya judulnya tegak di samping.
+   - **Novel & e-book**: satu entri = satu buku. Isi sinopsis, tagline, sampul (gambar atau warna), tombol toko buku online, dan harga e-book.
+   - **Bab novel**: isi tiap bab. Kolom "Judul novel" harus sama persis dengan judul bukunya.
+   - **Halaman Tentang**.
+   - **Pengaturan tampilan**: warna, huruf, foto beranda, teks pintu pembuka, nomor WhatsApp.
+3. Tekan *Save*. GitHub Pages membangun ulang website dalam satu-dua menit.
 
-Novel muncul di halaman **Novel** dan di rak kecil di beranda, urut sesuai urutan di file.
+Halaman `/admin/` di website juga berisi tombol ke panel ini.
+
+## Novel, bab, dan e-book
+
+- Buku ada di folder `_novel/` (satu file per buku), bab di `_bab/` (satu file per bab).
+- Setiap buku punya halamannya sendiri di `/novel/judul-buku/`, berisi sinopsis, tombol toko buku online, kotak e-book, dan daftar bab.
+- Halaman **E-book** (`/ebook/`) menampilkan semua buku yang kolom `ebook.jual`-nya dicentang.
+
+### Menjual e-book
+
+Website ini statis, jadi pembayarannya diproses oleh layanan lain:
+
+- **Paling rapi**: buat produk digital di layanan seperti Lynk.id, Mayar, KaryaKarsa, atau Gumroad. Mereka menerima pembayaran dan mengirim file e-book otomatis ke pembeli. Tempel link produknya di kolom **Link pembayaran**.
+- **Paling sederhana**: kosongkan link pembayaran dan isi nomor WhatsApp di Pengaturan tampilan. Tombolnya akan jadi "Pesan lewat WhatsApp" dengan pesan yang sudah terisi.
+- Kalau dua-duanya kosong, tombolnya tampil "Segera hadir".
 
 ## Huruf & ukuran
 
 Pembaca bisa mengatur sendiri lewat tombol **Aa** di pojok kanan atas: pilih Lora, Garamond, Inter, atau Mesin tik, lalu perbesar/perkecil (90–130%). Pilihannya tersimpan di perangkat mereka.
 
-Tampilan bawaan untuk semua pengunjung diatur di `_config.yml` bagian `tampilan` (`font` dan `ukuran`).
+Huruf bawaan untuk semua pengunjung diatur di `_data/tampilan.yml` (`font.isi`), atau lewat panel admin.
 
 ## Mengubah identitas situs
 

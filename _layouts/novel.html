@@ -1,0 +1,81 @@
+---
+layout: default
+---
+{%- assign b = page -%}
+{%- assign st = b.status | default: "Draf" | slugify -%}
+{%- assign daftar_bab = site.bab | where: "novel", b.title | sort: "bab" -%}
+<article class="book-page">
+  <section class="spread">
+    <div class="spread-cover bg-{{ b.warna | default: 'pink' }}">
+      <svg class="star" aria-hidden="true" data-speed="0.08" data-spin="0.1"><use href="#bintang"/></svg>
+      {% include book-cover.html book=b %}
+    </div>
+    <div class="spread-text">
+      <p class="book-meta">
+        <span class="badge badge-{{ st }}">{{ b.status | default: "Draf" }}</span>
+        {%- if b.genre %} · {{ b.genre }}{% endif %}
+        {%- if b.tahun %} · {{ b.tahun }}{% endif %}
+        {%- if daftar_bab.size > 0 %} · {{ daftar_bab.size }} bab{% endif %}
+      </p>
+      <h1 class="spread-title">{{ b.title }}</h1>
+      {%- if b.tagline %}<p class="spread-tagline">{{ b.tagline }}</p>{% endif %}
+
+      {%- if daftar_bab.size > 0 %}
+      <p class="btn-row"><a class="btn btn-pink" href="{{ daftar_bab.first.url | relative_url }}">Mulai baca bab 1 →</a></p>
+      {%- endif %}
+
+      {%- if b.toko.size > 0 %}
+      <p class="cta-label">Dapatkan bukunya di</p>
+      <p class="btn-row">
+        {%- for t in b.toko %}
+        <a class="btn btn-garis" href="{{ t.url }}" target="_blank" rel="noopener">{{ t.nama }} ↗</a>
+        {%- endfor %}
+      </p>
+      {%- endif %}
+    </div>
+  </section>
+
+  <section class="book-body">
+    <div>
+      <h2 class="section-label">Sinopsis</h2>
+      <div class="prose">{{ content }}</div>
+    </div>
+    {%- if b.kutipan and b.kutipan != "" %}
+    <blockquote class="pullquote">{{ b.kutipan }}</blockquote>
+    {%- endif %}
+  </section>
+
+  {%- if b.ebook.jual %}
+  <section class="ebook-box" id="ebook">
+    <h2 class="section-label">E-book</h2>
+    <div>
+      {% include harga.html ebook=b.ebook %}
+      <p class="ebook-detail">
+        {%- if b.ebook.format %}{{ b.ebook.format }}{% endif %}
+        {%- if b.ebook.halaman %} · {{ b.ebook.halaman }} halaman{% endif %}
+        {%- if b.ebook.catatan %}<br>{{ b.ebook.catatan }}{% endif %}
+      </p>
+    </div>
+    <p class="btn-row" style="margin: 0">{% include tombol-beli.html book=b %}</p>
+  </section>
+  {%- endif %}
+
+  <section class="chapters">
+    <h2 class="section-label">Daftar bab</h2>
+    {%- if daftar_bab.size > 0 %}
+    <ol class="chapter-list">
+      {%- for c in daftar_bab %}
+      <li><a href="{{ c.url | relative_url }}">
+        <span class="chapter-no">{{ c.bab | default: forloop.index }}</span>
+        <span class="chapter-title">{{ c.title }}</span>
+        <span class="chapter-go">Baca →</span>
+      </a></li>
+      {%- endfor %}
+    </ol>
+    {%- else %}
+    <p class="empty-note">Bab-babnya belum diunggah. Sabar ya, masih ditulis pelan-pelan.</p>
+    {%- endif %}
+  </section>
+
+  <p class="see-all"><a href="{{ '/novel/' | relative_url }}">← Kembali ke rak novel</a></p>
+</article>

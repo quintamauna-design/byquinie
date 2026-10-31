@@ -1,0 +1,3 @@
+{%- assign angka = include.n | plus: 0 | append: "" -%}
+{%- assign panjang = angka | size -%}
+Rp {% for i in (1..panjang) %}{% assign k = i | minus: 1 %}{% assign sisa = panjang | minus: k %}{{ angka | slice: k }}{% assign m = sisa | minus: 1 | modulo: 3 %}{% if m == 0 and sisa > 1 %}.{% endif %}{% endfor %}
